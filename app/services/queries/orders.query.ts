@@ -1,8 +1,8 @@
-import { OrdersQueryParamsType } from '@@/app/types/order.types';
+import { OrdersQueryParamsType } from '@@/types/order.types';
 import { URLS } from '../urls';
 import axios from '../axios';
 import { useQuery } from '@tanstack/react-query';
-import { DataType } from '@@/app/types';
+import { DataType } from '@@/types';
 
 export const useGetOrders = <T>(ordersQueryParams?: OrdersQueryParamsType) =>
   useQuery({

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from '../axios';
 import { URLS } from '../urls';
-import { OrderType } from '@@/app/types/order.types';
+import { OrderType } from '@@/types/order.types';
 
 const createOrder = async (data: OrderType) => {
   const res = await axios.post(URLS.orders, data);

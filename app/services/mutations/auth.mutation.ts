@@ -5,7 +5,7 @@ import {
   ChangePasswordType,
   RegisterType,
   ResetPasswordType,
-} from '@@/app/types/auth.types';
+} from '@@/types/auth.types';
 import axios from '../axios';
 
 export const useLoginMutation = () =>
