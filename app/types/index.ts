@@ -1,0 +1,67 @@
+export interface Item {
+  id: string;
+}
+
+export interface BaseParams {
+  page?: number;
+  cursor?: string;
+  direction?: string;
+  term?: string;
+  paginationType?: string;
+}
+
+export interface ListProps {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export enum SortDirection {
+  ASC = 'asc',
+  DESC = 'desc',
+}
+
+export type PageEdge<T> = {
+  cursor: string;
+  node: T;
+};
+
+export type CursorType = { cursor: string; isCurrent: boolean; page: number };
+
+export type PageCursors = {
+  around: CursorType[];
+  next: CursorType;
+  previous: CursorType;
+};
+
+export type DataType<T> = {
+  pageCursors: PageCursors;
+  pageEdges: PageEdge<T>[];
+  totalCount: number;
+  uniquePatients?: any;
+};
+
+export type QueryParamsType = {
+  term?: string;
+  status?: boolean;
+  size?: number;
+  direction?: string;
+  memberNo?: string | number;
+  cursor?: string;
+  mode?: string;
+  startDate?: string;
+  endDate?: string;
+  orderBy?: string;
+  departmentId?: string;
+  [key: string]: any;
+};
+
+export interface LoadOptionsProps<Params, T> {
+  url: string;
+  params: Params;
+  cursorBased?: boolean;
+  // Can be a single path or a nested path for an object. Eg "title", "employee.name".
+  // Can also be a function that returns the label as a string.
+  labelOrLabelPath: string | ((item: T) => string);
+  valueOrValuePath: string | ((item: T) => string);
+}
