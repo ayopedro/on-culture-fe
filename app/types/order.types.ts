@@ -1,4 +1,4 @@
-import { ProductCategory } from '../utils/ constant';
+import { ProductCategory } from '../utils/constant';
 
 export type OrdersQueryParamsType = {
   term?: string;
