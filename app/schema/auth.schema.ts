@@ -1,4 +1,4 @@
-import Yup from 'yup';
+import * as Yup from 'yup';
 
 export const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -9,7 +9,7 @@ export const LoginSchema = Yup.object().shape({
 });
 
 export const RegisterSchema = Yup.object().shape({
-  name: Yup.string().required('Full name is required'),
+  name: Yup.string().required('Full name is required!'),
   email: Yup.string()
     .trim()
     .email('Invalid email!')
@@ -44,10 +44,11 @@ export const ChangePasswordSchema = Yup.object().shape({
 });
 
 export const ResetPasswordSchema = Yup.object().shape({
-  newPassword: Yup.string().trim().required('New password is required'),
-  confirmNewPassword: Yup.string()
+  token: Yup.string().trim().required('Kindly provide a one time password'),
+  password: Yup.string().trim().required('Password is required'),
+  confirmPassword: Yup.string()
     .trim()
-    .required('Confirm new password is required')
+    .required('Confirm password is required')
     .test(
       'passwords-match',
       'Password must be the same as the new password',

@@ -4,7 +4,7 @@ export interface LoginType {
 }
 
 export interface RegisterType {
-  customer_name: string;
+  name: string;
   email: string;
   password: string;
 }
@@ -16,6 +16,7 @@ export interface ChangePasswordType {
 }
 
 export interface ResetPasswordType {
-  newPassword: string;
-  confirmNewPassword: string;
+  token: string;
+  password: string;
+  confirmPassword: string;
 }
