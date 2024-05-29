@@ -44,7 +44,6 @@ const OrdersTable = () => {
     },
     {
       name: 'Actions',
-      center: true,
       cell: () => (
         <button>
           <FaEllipsis className='text-2xl' />

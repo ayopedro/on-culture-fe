@@ -21,15 +21,18 @@ const Login = () => {
       password: '',
     },
   });
-  const onSubmit: SubmitHandler<LoginType> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<LoginType> = (data) => {
+    console.log(data);
+    router.push('/dashboard');
+  };
   const router = useRouter();
 
   return (
     <div className='bg-bg-light-blue flex items-center h-screen justify-center'>
-      <div className='flex flex-col gap-10 items-center w-1/4'>
+      <div className='flex flex-col gap-10 items-center md:w-1/4'>
         <div
           className='flex items-center gap-4 cursor-pointer'
-          onClick={() => router.push('/login')}
+          onClick={() => router.push('/')}
         >
           <Image src='/Logo.png' alt='logo' width={30} height={30} />
           <h1 className='text-3xl font-bold'>XYZ Store</h1>

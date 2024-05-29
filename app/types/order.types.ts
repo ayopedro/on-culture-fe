@@ -49,6 +49,6 @@ export type OrderType = {
   email: string;
   order_date: string;
   product_name: string;
-  product_category: ProductCategory;
-  price: number;
+  product_category: string;
+  price: string;
 };

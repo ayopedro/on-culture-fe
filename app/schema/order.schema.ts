@@ -1,4 +1,4 @@
-import Yup from 'yup';
+import * as Yup from 'yup';
 
 export const CreateOrderSchema = Yup.object().shape({
   customer_name: Yup.string().required('Customer name is required'),
