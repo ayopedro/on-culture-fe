@@ -8,6 +8,14 @@ export enum ProductCategory {
   SCIFI = 'SciFi',
 }
 
+export const ProductCategoryColorMap = {
+  [ProductCategory.DRAMA]: '#B586F1',
+  [ProductCategory.COMEDY]: '#25DFEB',
+  [ProductCategory.DOCUMENTARY]: '#EB2555',
+  [ProductCategory.HORROR]: '#D8DB4C',
+  [ProductCategory.SCIFI]: '#2563EB',
+};
+
 export const ProductCategories = [
   {
     key: 1,
