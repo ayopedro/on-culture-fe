@@ -4,7 +4,7 @@ import { OrdersQueryResponse, TableProps } from '@@/types/order.types';
 import { AppUtilities } from '@@/utils';
 import { customStyles } from '@@/utils/custom-table-styles';
 import moment from 'moment';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import TablePagination from './table-pagination';
 import Card from './card';
@@ -14,7 +14,11 @@ import { useGetOrders } from '@@/services/queries/orders.query';
 import { SortDirection } from '@@/types';
 import Spinner from './spinner';
 
-const OrdersTable = () => {
+type Props = {
+  year?: string;
+};
+
+const OrdersTable = ({ year }: Props) => {
   const [count, setCount] = useState<number>(0);
   const [selectedPageSize, setSelectedPageSize] = useState<number>(10);
   const [filters, setFilters] = useState<any>({});
@@ -22,7 +26,11 @@ const OrdersTable = () => {
 
   const { data, isLoading, isSuccess } = useGetOrders<OrdersQueryResponse>({
     ...(debouncedTerm && { term: debouncedTerm }),
-    ...{ ...filters, size: selectedPageSize, direction: SortDirection.DESC },
+    ...{
+      ...filters,
+      size: selectedPageSize,
+      direction: SortDirection.DESC,
+    },
   });
 
   const memoizedData = useMemo(() => {
@@ -66,6 +74,14 @@ const OrdersTable = () => {
       ),
     },
   ];
+
+  useEffect(() => {
+    console.log('running...');
+    setFilters((prevState: OrdersQueryResponse) => ({
+      ...prevState,
+      period: year,
+    }));
+  }, [year]);
 
   return (
     <Card>

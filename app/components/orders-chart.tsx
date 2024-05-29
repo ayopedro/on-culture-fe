@@ -52,7 +52,6 @@ const OrdersChart = () => {
           <Doughnut data={data} options={options} />
         </div>
       </Card>
-      ;
     </div>
   );
 };

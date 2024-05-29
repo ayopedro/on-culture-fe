@@ -15,6 +15,7 @@ export const useGetOrders = <T>(ordersQueryParams?: OrdersQueryParamsType) =>
           cursor: ordersQueryParams?.cursor,
           size: ordersQueryParams?.size || 10,
           orderBy: ordersQueryParams?.orderBy,
+          period: ordersQueryParams?.period,
         },
       });
       return data.data as DataType<T>;
@@ -34,6 +35,7 @@ export const useGetOrdersSummary = <T>(
           cursor: ordersQueryParams?.cursor,
           size: ordersQueryParams?.size || 10,
           orderBy: ordersQueryParams?.orderBy,
+          period: ordersQueryParams?.period,
         },
       });
       return data.data as DataType<T>;

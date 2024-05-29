@@ -60,8 +60,15 @@ export interface LoadOptionsProps<Params, T> {
   url: string;
   params: Params;
   cursorBased?: boolean;
-  // Can be a single path or a nested path for an object. Eg "title", "employee.name".
-  // Can also be a function that returns the label as a string.
   labelOrLabelPath: string | ((item: T) => string);
   valueOrValuePath: string | ((item: T) => string);
+}
+
+export enum Period {
+  THIS_YEAR = 'P12M',
+  THIS_MONTH = 'P30D',
+  LAST_YEAR = 'P1Y',
+  LAST_MONTH = 'P1M',
+  TWO_YEARS = 'P2Y',
+  THREE_YEARS = 'P3Y',
 }

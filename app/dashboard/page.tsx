@@ -10,23 +10,34 @@ import { useAppSelector } from '@@/services/redux/hooks';
 import { user } from '@@/services/redux/selectors/auth.selector';
 import { SortDirection } from '@@/types';
 import { OrderSummaryResponse } from '@@/types/order.types';
+import { DateFilter } from '@@/utils/constant';
 import { DashboardStats } from '@@/utils/dummy-data';
 import moment from 'moment';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const DashboardPage = () => {
+  const searchParams = useSearchParams();
+  const year = searchParams.get('year');
+
+  const router = useRouter();
+
   const [filters, setFilters] = useState<any>({});
 
-  const {
-    data = {},
-    isLoading,
-    isSuccess,
-  } = useGetOrdersSummary<OrderSummaryResponse>({
+  const { data = {} } = useGetOrdersSummary<OrderSummaryResponse>({
     ...{ ...filters, direction: SortDirection.DESC },
   });
-  console.log('🚀 ~ DashboardPage ~ data:', data);
 
   const user_details = useAppSelector(user);
+
+  const handleDateFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const query = e.target.value ? `?year=${e.target.value}` : '';
+    router.push(`/dashboard/${query}`);
+  };
+
+  useEffect(() => {
+    setFilters((prev: any) => ({ ...prev, period: year }));
+  }, [year]);
 
   return (
     <div className='p-5'>
@@ -42,8 +53,14 @@ const DashboardPage = () => {
         <select
           name='dateFilter'
           className='border border-slate-400 bg-transparent rounded-md p-2 outline-none text-grey font-medium'
+          onChange={handleDateFilter}
+          defaultValue={year || ''}
         >
-          <option value=''>This Year</option>
+          {DateFilter.map((filter) => (
+            <option key={filter.value} value={filter.value}>
+              {filter.label}
+            </option>
+          ))}
         </select>
       </div>
       <section className='my-12'>

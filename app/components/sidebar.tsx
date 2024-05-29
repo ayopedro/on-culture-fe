@@ -53,13 +53,13 @@ const Sidebar = ({ showSideBar }: Props) => {
         } mb-10`}
       >
         <li className='flex gap-4 items-center cursor-pointer'>
-          <Gear /> Settings
+          <Gear /> {showSideBar && 'Settings'}
         </li>
         <li
           className='flex gap-4 items-center cursor-pointer'
           onClick={handleLogout}
         >
-          <Logout /> Log Out
+          <Logout /> {showSideBar && 'Log Out'}
         </li>
       </ul>
     </aside>

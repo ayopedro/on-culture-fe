@@ -31,7 +31,7 @@ axios.interceptors.response.use(
       error.response?.status === 401 &&
       error.response?.data?.message === 'Unauthorized'
     ) {
-      // sessionStorage.removeItem('isLoggedIn');
+      sessionStorage.removeItem('isLoggedIn');
       toast.error(
         `${error.response?.data?.message}. Please login to continue` ||
           error.message

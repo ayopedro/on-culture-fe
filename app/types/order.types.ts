@@ -6,7 +6,7 @@ export type OrdersQueryParamsType = {
   size?: number;
   direction?: string;
   orderBy?: string;
-  period?: string; //come back to this
+  period?: string;
   category?: ProductCategory;
 };
 

@@ -10,15 +10,19 @@ type Props = {
 
 export const DashboardStat = ({ title, data, uKey }: Props) => {
   return Object.keys(data).length ? (
-    <div className='py-8 px-12 flex flex-col gap-5'>
+    <div className='md:py-8 md:px-12 flex flex-col gap-5'>
       <h4 className='text-grey'>{title}</h4>
       <div className='flex items-center gap-5'>
-        <h3 className='text-2xl font-bold'>
+        <h3 className='md:text-2xl font-bold'>
           {title === 'Total Revenue'
             ? AppUtilities.formatAmount(data[uKey]?.current)
             : data[uKey]?.current}
         </h3>
-        <div className='bg-bg-green px-3 py-1 rounded-md flex gap-1 items-center'>
+        <div
+          className={`${
+            data[uKey].difference < 0 ? 'bg-bg-red' : 'bg-bg-green'
+          } px-3 py-1 rounded-md flex gap-1 items-center`}
+        >
           {data[uKey].difference < 0 ? (
             <FaLongArrowAltDown
               className={
@@ -37,7 +41,7 @@ export const DashboardStat = ({ title, data, uKey }: Props) => {
               data[uKey].difference < 0 ? 'text-txt-red' : 'text-txt-green'
             }
           >
-            {data[uKey].difference}%
+            {Math.floor(data[uKey].difference)}%
           </p>
         </div>
       </div>

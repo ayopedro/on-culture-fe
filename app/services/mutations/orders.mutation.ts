@@ -16,7 +16,7 @@ export const useCreateOrderMutation = () => {
     mutationFn: createOrder,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['getOrders'],
+        queryKey: ['getOrders', 'getOrdersSummary'],
       });
     },
   });

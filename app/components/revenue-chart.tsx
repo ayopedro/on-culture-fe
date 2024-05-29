@@ -69,7 +69,7 @@ const RevenueChart = () => {
       <Card>
         <h4 className='text-grey mb-10'>Revenue over time</h4>
         <div>
-          <Line data={data} options={options} className='mx-auto' />
+          <Line data={data} options={options} />
         </div>
       </Card>
     </div>
