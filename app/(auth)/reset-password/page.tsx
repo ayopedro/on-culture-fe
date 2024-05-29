@@ -8,8 +8,11 @@ import { ResetPasswordType } from '@@/types/auth.types';
 import { ResetPasswordSchema } from '@@/schema/auth.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useResetPasswordMutation } from '@@/services/mutations/auth.mutation';
+import toast from 'react-hot-toast';
 
 const ResetPassword = () => {
+  const { mutateAsync: resetPassword, isPending } = useResetPasswordMutation();
   const router = useRouter();
   const {
     register,
@@ -19,14 +22,27 @@ const ResetPassword = () => {
     resolver: yupResolver(ResetPasswordSchema),
     defaultValues: {
       token: '',
+      email: '',
       password: '',
       confirmPassword: '',
     },
   });
 
-  const onSubmit: SubmitHandler<ResetPasswordType> = (data) => {
-    console.log(data);
-    router.push('/login');
+  const onSubmit: SubmitHandler<ResetPasswordType> = async (data) => {
+    try {
+      const result = await resetPassword(data);
+      if (!result) {
+        return;
+      }
+      if (result.statusCode === 200 || result.statusCode === 201) {
+        router.push('/login');
+        toast.success(result.data.message || 'Registration Successful!');
+        sessionStorage.setItem('isLoggedIn', JSON.stringify(result.data.data));
+      }
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'An error occurred');
+      throw new Error(error);
+    }
   };
 
   return (
@@ -44,6 +60,18 @@ const ResetPassword = () => {
             onSubmit={handleSubmit(onSubmit)}
             className='rounded-md w-full flex flex-col gap-5 px-5 py-10 bg-white'
           >
+            <div className='input-group'>
+              <label htmlFor='email'>Email Address</label>
+              <div className='flex flex-col gap-1'>
+                <input
+                  type='text'
+                  placeholder='email@email.com'
+                  {...register('email')}
+                  className={errors.email ? 'bg-bg-red' : 'bg-white'}
+                />
+                <small className='text-red mb-0'>{errors.email?.message}</small>
+              </div>
+            </div>
             <div className='input-group'>
               <label htmlFor='token'>One Time Password</label>
               <div className='flex flex-col gap-1'>

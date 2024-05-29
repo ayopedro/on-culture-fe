@@ -2,14 +2,21 @@
 
 import PasswordInput from '@@/components/password-input';
 import { LoginSchema } from '@@/schema/auth.schema';
+import { useLoginMutation } from '@@/services/mutations/auth.mutation';
+import { useAppDispatch } from '@@/services/redux/hooks';
+import { loginSuccess } from '@@/services/redux/slices/auth.slice';
 import { LoginType } from '@@/types/auth.types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 const Login = () => {
+  const { mutateAsync: login, isPending } = useLoginMutation();
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
@@ -21,9 +28,24 @@ const Login = () => {
       password: '',
     },
   });
-  const onSubmit: SubmitHandler<LoginType> = (data) => {
-    console.log(data);
-    router.push('/dashboard');
+
+  const onSubmit: SubmitHandler<LoginType> = async (data) => {
+    try {
+      const result = await login(data);
+      if (!result) {
+        return;
+      }
+      if (result.statusCode === 200 || result.statusCode === 201) {
+        const { user, accessToken } = result.data;
+        dispatch(loginSuccess({ ...user, accessToken }));
+        router.push('/dashboard');
+        toast.success(result.data.message || 'Login Successful!');
+        sessionStorage.setItem('isLoggedIn', JSON.stringify(accessToken));
+      }
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'An error occurred');
+      throw new Error(error);
+    }
   };
   const router = useRouter();
 
@@ -73,7 +95,9 @@ const Login = () => {
                 </small>
               </div>
             </div>
-            <button className='btn btn-outline mt-5'>Login</button>
+            <button className='btn btn-outline mt-5'>
+              {isPending ? 'Logging in' : 'Login'}
+            </button>
             <p className='text-center text-grey'>
               Don&apos;t have an account?{' '}
               <span>

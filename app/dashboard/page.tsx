@@ -1,3 +1,5 @@
+'use client';
+
 import Card from '@@/components/card';
 import { DashboardStat } from '@@/components/dashboard-stat';
 import OrdersChart from '@@/components/orders-chart';

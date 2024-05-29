@@ -9,7 +9,8 @@ export const LoginSchema = Yup.object().shape({
 });
 
 export const RegisterSchema = Yup.object().shape({
-  name: Yup.string().required('Full name is required!'),
+  firstName: Yup.string().required('First name is required!'),
+  lastName: Yup.string().required('Last name is required!'),
   email: Yup.string()
     .trim()
     .email('Invalid email!')
@@ -45,6 +46,10 @@ export const ChangePasswordSchema = Yup.object().shape({
 
 export const ResetPasswordSchema = Yup.object().shape({
   token: Yup.string().trim().required('Kindly provide a one time password'),
+  email: Yup.string()
+    .trim()
+    .email('Invalid email!')
+    .required('Email is required!'),
   password: Yup.string().trim().required('Password is required'),
   confirmPassword: Yup.string()
     .trim()
