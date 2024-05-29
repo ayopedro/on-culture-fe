@@ -5,15 +5,20 @@ import { DashboardStat } from '@@/components/dashboard-stat';
 import OrdersChart from '@@/components/orders-chart';
 import OrdersTable from '@@/components/orders-table';
 import RevenueChart from '@@/components/revenue-chart';
+import { useAppSelector } from '@@/services/redux/hooks';
+import { user } from '@@/services/redux/selectors/auth.selector';
 import { DashboardStats } from '@@/utils/dummy-data';
 import moment from 'moment';
 
 const DashboardPage = () => {
+  const user_details = useAppSelector(user);
   return (
     <div className='p-5'>
       <div className='flex justify-between items-center'>
         <div>
-          <h2 className='text-3xl font-bold'>Welcome, Matthew</h2>
+          <h2 className='text-3xl font-bold'>
+            Welcome, {user_details?.firstName}
+          </h2>
           <p className='text-grey mt-1'>
             {moment().format('dddd, DD MMM YYYY')}
           </p>

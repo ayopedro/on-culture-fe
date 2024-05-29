@@ -6,9 +6,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { OrderType } from '@@/types/order.types';
 import { CreateOrderSchema } from '@@/schema/order.schema';
-import { ProductCategory } from '@@/utils/constant';
+import { ProductCategories, ProductCategory } from '@@/utils/constant';
+import { useCreateOrderMutation } from '@@/services/mutations/orders.mutation';
+import toast from 'react-hot-toast';
+import moment from 'moment';
 
 const Register = () => {
+  const { mutateAsync: createOrder, isPending } = useCreateOrderMutation();
   const router = useRouter();
   const {
     register,
@@ -26,9 +30,27 @@ const Register = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<OrderType> = (data) => {
-    console.log(data);
-    router.push('/');
+  const onSubmit: SubmitHandler<OrderType> = async (data) => {
+    try {
+      const { price, order_date, ...rest } = data;
+      const serverData = {
+        ...rest,
+        price: Number(price),
+        order_date: new Date(order_date),
+      };
+      const result = await createOrder(serverData as unknown as OrderType);
+
+      if (!result) {
+        return;
+      }
+      if (result.statusCode === 200 || result.statusCode === 201) {
+        router.push('/');
+        toast.success(result.message || 'Order created successfully!');
+      }
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'An error occurred');
+      throw new Error(error);
+    }
   };
 
   return (
@@ -93,9 +115,12 @@ const Register = () => {
                   className={errors.customer_name ? 'bg-bg-red' : 'bg-white'}
                   {...register('product_category')}
                 >
-                  <option value='documentary'>
-                    {ProductCategory.Documentary}
-                  </option>
+                  <option value={''}>--Select category--</option>
+                  {ProductCategories.map(({ key, value, label }) => (
+                    <option key={key} value={value}>
+                      {label}
+                    </option>
+                  ))}
                 </select>
                 <small className='text-red mb-0'>
                   {errors.product_category?.message}
@@ -128,7 +153,9 @@ const Register = () => {
                 </small>
               </div>
             </div>
-            <button className='btn btn-outline mt-5'>Create order</button>
+            <button className='btn btn-outline mt-5'>
+              {isPending ? 'Creating order...' : 'Create order'}
+            </button>
           </form>
         </div>
       </div>

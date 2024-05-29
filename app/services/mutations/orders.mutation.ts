@@ -5,10 +5,10 @@ import { OrderType } from '@@/types/order.types';
 
 const createOrder = async (data: OrderType) => {
   const res = await axios.post(URLS.orders, data);
-  return res;
+  return res.data;
 };
 
-export const useCreateEnrolleeMutation = () => {
+export const useCreateOrderMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

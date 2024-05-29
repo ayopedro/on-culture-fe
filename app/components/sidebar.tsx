@@ -4,12 +4,28 @@ import { SideBarLinks } from '@@/components/side-bar-links';
 import Logout from '@@/components/icons/logout';
 import Gear from '@@/components/icons/gear';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAppDispatch } from '@@/services/redux/hooks';
+import { logoutUser } from '@@/services/redux/slices/auth.slice';
+import { persistor } from '@@/services/redux/store';
+import toast from 'react-hot-toast';
 
 type Props = {
   showSideBar: boolean;
 };
 
 const Sidebar = ({ showSideBar }: Props) => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    sessionStorage.clear();
+    persistor.purge();
+    router.push('/');
+    toast.success('Logout Successful!');
+  };
+
   return (
     <aside
       className={`${
@@ -39,7 +55,10 @@ const Sidebar = ({ showSideBar }: Props) => {
         <li className='flex gap-4 items-center cursor-pointer'>
           <Gear /> Settings
         </li>
-        <li className='flex gap-4 items-center cursor-pointer'>
+        <li
+          className='flex gap-4 items-center cursor-pointer'
+          onClick={handleLogout}
+        >
           <Logout /> Log Out
         </li>
       </ul>
