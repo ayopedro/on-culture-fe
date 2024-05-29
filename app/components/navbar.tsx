@@ -11,7 +11,7 @@ type Props = {
 
 const Navbar = ({ toggle }: Props) => {
   return (
-    <nav className='h-[88] grid grid-cols-12'>
+    <nav className='h-[88] grid grid-cols-12 sticky top-0 bg-white'>
       <div className='flex gap-3 items-center col-span-2 p-5'>
         <button onClick={toggle}>
           <IoMdMenu className='text-2xl' />

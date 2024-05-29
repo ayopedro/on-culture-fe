@@ -18,12 +18,15 @@ const DashboardLayout = ({
   return (
     <div className='h-screen'>
       <Navbar toggle={toggleSidebar} />
-      <div className='h-full grid grid-cols-12'>
+      <div
+        className='grid grid-cols-12'
+        style={{ height: 'calc(100vh - 88px)' }}
+      >
         <Sidebar showSideBar={showSidebar} />
         <main
-          className={`bg-bg-light-blue w-full ${
+          className={`bg-bg-light-blue w-full p-5 ${
             showSidebar ? 'col-span-10' : 'col-span-11'
-          }`}
+          } overflow-auto`}
         >
           {children}
         </main>

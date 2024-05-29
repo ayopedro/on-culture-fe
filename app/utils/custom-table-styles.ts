@@ -10,11 +10,12 @@ export const customStyles: TableStyles = {
     style: {
       display: 'flex',
       gap: '0.5rem',
+      backgroundColor: '#F8FAFC',
     },
   },
   headCells: {
     style: {
-      padding: '0',
+      padding: '0.5rem 1rem',
       letterSpacing: '0.2px',
       fontSize: '14px',
     },
@@ -27,7 +28,7 @@ export const customStyles: TableStyles = {
   },
   cells: {
     style: {
-      padding: '0',
+      padding: '0.5rem 1rem',
       letterSpacing: '0.2px',
       fontSize: '14px',
       minWidth: 'unset',

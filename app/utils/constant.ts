@@ -5,4 +5,8 @@ export const ProductCategories = [
   },
 ];
 
-export enum ProductCategory {}
+export enum ProductCategory {
+  Documentary = 'Documentary',
+  Drama = 'Drama',
+  Comedy = 'Comedy',
+}

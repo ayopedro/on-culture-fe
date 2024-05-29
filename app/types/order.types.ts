@@ -12,15 +12,15 @@ export type OrdersQueryParamsType = {
 
 export interface TableProps {
   id: string;
-  contact: {
-    id: string;
+  customer: {
+    id?: string;
     name: string;
   };
   date: string;
   product: {
-    id: string;
+    id?: string;
     name: string;
-    category: ProductCategory;
+    category: string | ProductCategory;
     price: number;
   };
 }
