@@ -7,12 +7,14 @@ const axios = Axios.create({
 });
 
 const axiosConfiguration = (config: AxiosRequestConfig) => {
-  const token = JSON.parse(sessionStorage.getItem('merchant') || '{}').token;
-  if (token)
+  const token = sessionStorage.getItem('isLoggedIn');
+  if (token) {
+    const parsedToken = JSON.parse(token);
     config.headers = {
       ...(config.headers || {}),
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${parsedToken}`,
     };
+  }
 
   return config;
 };
@@ -29,6 +31,7 @@ axios.interceptors.response.use(
       error.response?.status === 401 &&
       error.response?.data?.message === 'Unauthorized'
     ) {
+      // sessionStorage.removeItem('isLoggedIn');
       toast.error(
         `${error.response?.data?.message}. Please login to continue` ||
           error.message

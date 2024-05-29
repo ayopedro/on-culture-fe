@@ -10,11 +10,34 @@ export type OrdersQueryParamsType = {
   category?: ProductCategory;
 };
 
+export interface OrdersQueryResponse {
+  id: string;
+  customer: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  product: {
+    id: string;
+    name: string;
+    category: string;
+    price: number;
+  };
+  date: string;
+}
+
+export interface OrderSummaryResponse {
+  totalRevenue: Record<string, any> | number;
+  totalOrders: Record<string, any> | number;
+  uniqueCustomers: Record<string, any> | number;
+}
+
 export interface TableProps {
   id: string;
   customer: {
     id?: string;
     name: string;
+    email: string;
   };
   date: string;
   product: {

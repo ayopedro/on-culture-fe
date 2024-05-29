@@ -5,13 +5,29 @@ import { DashboardStat } from '@@/components/dashboard-stat';
 import OrdersChart from '@@/components/orders-chart';
 import OrdersTable from '@@/components/orders-table';
 import RevenueChart from '@@/components/revenue-chart';
+import { useGetOrdersSummary } from '@@/services/queries/orders.query';
 import { useAppSelector } from '@@/services/redux/hooks';
 import { user } from '@@/services/redux/selectors/auth.selector';
+import { SortDirection } from '@@/types';
+import { OrderSummaryResponse } from '@@/types/order.types';
 import { DashboardStats } from '@@/utils/dummy-data';
 import moment from 'moment';
+import { useState } from 'react';
 
 const DashboardPage = () => {
+  const [filters, setFilters] = useState<any>({});
+
+  const {
+    data = {},
+    isLoading,
+    isSuccess,
+  } = useGetOrdersSummary<OrderSummaryResponse>({
+    ...{ ...filters, direction: SortDirection.DESC },
+  });
+  console.log('🚀 ~ DashboardPage ~ data:', data);
+
   const user_details = useAppSelector(user);
+
   return (
     <div className='p-5'>
       <div className='flex justify-between items-center'>
@@ -37,8 +53,8 @@ const DashboardPage = () => {
               <DashboardStat
                 key={stat.id}
                 title={stat.title}
-                amount={stat.amount}
-                diff={stat.diff}
+                data={data}
+                uKey={stat.key}
               />
             ))}
           </div>

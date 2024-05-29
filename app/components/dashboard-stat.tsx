@@ -1,37 +1,50 @@
 import { AppUtilities } from '@@/utils';
 import { FaLongArrowAltDown, FaLongArrowAltUp } from 'react-icons/fa';
+import Spinner from './spinner';
 
 type Props = {
   title: string;
-  amount: number;
-  diff?: number;
+  data: Record<string, any>;
+  uKey: string;
 };
 
-export const DashboardStat = ({ title, amount, diff = 0 }: Props) => {
-  return (
+export const DashboardStat = ({ title, data, uKey }: Props) => {
+  return Object.keys(data).length ? (
     <div className='py-8 px-12 flex flex-col gap-5'>
       <h4 className='text-grey'>{title}</h4>
       <div className='flex items-center gap-5'>
         <h3 className='text-2xl font-bold'>
           {title === 'Total Revenue'
-            ? AppUtilities.formatAmount(amount)
-            : amount}
+            ? AppUtilities.formatAmount(data[uKey]?.current)
+            : data[uKey]?.current}
         </h3>
         <div className='bg-bg-green px-3 py-1 rounded-md flex gap-1 items-center'>
-          {diff < 0 ? (
+          {data[uKey].difference < 0 ? (
             <FaLongArrowAltDown
-              className={diff < 0 ? 'text-txt-red' : 'text-txt-green'}
+              className={
+                data[uKey].difference < 0 ? 'text-txt-red' : 'text-txt-green'
+              }
             />
           ) : (
             <FaLongArrowAltUp
-              className={diff < 0 ? 'text-txt-red' : 'text-txt-green'}
+              className={
+                data[uKey].difference < 0 ? 'text-txt-red' : 'text-txt-green'
+              }
             />
           )}
-          <p className={diff < 0 ? 'text-txt-red' : 'text-txt-green'}>
-            {diff}%
+          <p
+            className={
+              data[uKey].difference < 0 ? 'text-txt-red' : 'text-txt-green'
+            }
+          >
+            {data[uKey].difference}%
           </p>
         </div>
       </div>
+    </div>
+  ) : (
+    <div className='py-16 px-12 flex flex-col items-center justify-center gap-5'>
+      <Spinner />
     </div>
   );
 };
