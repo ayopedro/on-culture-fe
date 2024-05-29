@@ -13,7 +13,7 @@ import { useMemo } from 'react';
 import { DataType } from '@@/types';
 
 type Props = {
-  data: DataType<OrdersQueryResponse>;
+  data: DataType<OrdersQueryResponse> | undefined;
   isLoading: boolean;
   count: number;
   setCount: React.Dispatch<React.SetStateAction<number>>;
@@ -69,45 +69,53 @@ const OrdersTable = ({
   ];
 
   const memoizedOrderData = useMemo(() => {
-    if (!isLoading) return AppUtilities.reformData(data);
+    if (!isLoading) return AppUtilities.reformData(data!);
     return [];
   }, [data, isLoading]);
 
   return (
     <Card>
       <h4 className='text-grey mb-5'>Orders</h4>
-      <DataTable
-        data={memoizedOrderData}
-        columns={columns}
-        progressPending={isLoading}
-        progressComponent={<Spinner />}
-        customStyles={customStyles}
-      />
-      <TablePagination
-        totalCount={data?.totalCount!}
-        nextLoad={data?.pageCursors.next?.cursor}
-        previous={data?.pageCursors.previous?.cursor}
-        count={count}
-        setCount={setCount}
-        selectedPageSize={selectedPageSize}
-        setSelectedPageSize={setSelectedPageSize}
-        handleNextLoad={() => {
-          const next = data?.pageCursors.next;
-          if (!next) return;
-          setFilters((prevState: OrdersQueryResponse) => ({
-            ...prevState,
-            cursor: next.cursor,
-          }));
-        }}
-        handlePreviousLoad={() => {
-          const previous = data?.pageCursors.previous;
-          if (!previous) return;
-          setFilters((prevState: OrdersQueryResponse) => ({
-            ...prevState,
-            cursor: previous.cursor,
-          }));
-        }}
-      />
+      {!isLoading ? (
+        <>
+          <DataTable
+            data={memoizedOrderData}
+            columns={columns}
+            progressPending={isLoading}
+            progressComponent={<Spinner />}
+            customStyles={customStyles}
+          />
+          <TablePagination
+            totalCount={data?.totalCount!}
+            nextLoad={data?.pageCursors.next?.cursor}
+            previous={data?.pageCursors.previous?.cursor}
+            count={count}
+            setCount={setCount}
+            selectedPageSize={selectedPageSize}
+            setSelectedPageSize={setSelectedPageSize}
+            handleNextLoad={() => {
+              const next = data?.pageCursors.next;
+              if (!next) return;
+              setFilters((prevState: OrdersQueryResponse) => ({
+                ...prevState,
+                cursor: next.cursor,
+              }));
+            }}
+            handlePreviousLoad={() => {
+              const previous = data?.pageCursors.previous;
+              if (!previous) return;
+              setFilters((prevState: OrdersQueryResponse) => ({
+                ...prevState,
+                cursor: previous.cursor,
+              }));
+            }}
+          />
+        </>
+      ) : (
+        <div className='flex justify-center items-center h-full'>
+          <Spinner />
+        </div>
+      )}
     </Card>
   );
 };

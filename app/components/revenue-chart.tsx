@@ -13,6 +13,7 @@ import {
 } from 'recharts';
 import Spinner from './spinner';
 import moment from 'moment';
+import { MdDataObject } from 'react-icons/md';
 
 type Props = {
   data: DataType<RevenueResponse> | undefined;
@@ -88,7 +89,8 @@ const RevenueChart = ({ data, isSuccess }: Props) => {
                   />
                 </AreaChart>
               ) : (
-                <div className='flex items-center justify-center h-full'>
+                <div className='flex flex-col items-center justify-center h-full'>
+                  <MdDataObject className='text-grey text-4xl' />
                   <p className='text-grey'>No data</p>
                 </div>
               )}

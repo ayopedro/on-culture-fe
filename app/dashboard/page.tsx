@@ -118,21 +118,15 @@ const DashboardPage = () => {
       </section>
 
       <section>
-        {orderSuccess ? (
-          <OrdersTable
-            count={count}
-            selectedPageSize={selectedPageSize}
-            setCount={setCount}
-            setSelectedPageSize={setSelectedPageSize}
-            setFilters={setFilters}
-            data={orderData}
-            isLoading={!orderSuccess}
-          />
-        ) : (
-          <div className='flex justify-center items-center h-full'>
-            <Spinner />
-          </div>
-        )}
+        <OrdersTable
+          count={count}
+          selectedPageSize={selectedPageSize}
+          setCount={setCount}
+          setSelectedPageSize={setSelectedPageSize}
+          setFilters={setFilters}
+          data={orderData}
+          isLoading={!orderSuccess}
+        />
       </section>
     </div>
   );

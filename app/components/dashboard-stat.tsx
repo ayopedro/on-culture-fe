@@ -20,25 +20,25 @@ export const DashboardStat = ({ title, data, uKey }: Props) => {
         </h3>
         <div
           className={`${
-            data[uKey].difference < 0 ? 'bg-bg-red' : 'bg-bg-green'
+            data[uKey].difference > 0 ? 'bg-bg-green' : 'bg-bg-red'
           } px-3 py-1 rounded-md flex gap-1 items-center`}
         >
-          {data[uKey].difference < 0 ? (
+          {data[uKey].difference < 1 ? (
             <FaLongArrowAltDown
               className={
-                data[uKey].difference < 0 ? 'text-txt-red' : 'text-txt-green'
+                data[uKey].difference > 0 ? 'text-txt-green' : 'text-txt-red'
               }
             />
           ) : (
             <FaLongArrowAltUp
               className={
-                data[uKey].difference < 0 ? 'text-txt-red' : 'text-txt-green'
+                data[uKey].difference > 0 ? 'text-txt-green' : 'text-txt-red'
               }
             />
           )}
           <p
             className={
-              data[uKey].difference < 0 ? 'text-txt-red' : 'text-txt-green'
+              data[uKey].difference > 0 ? 'text-txt-green' : 'text-txt-red'
             }
           >
             {Math.floor(data[uKey].difference)}%

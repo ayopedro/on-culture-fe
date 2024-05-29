@@ -34,7 +34,7 @@ const TablePagination = ({
         <select
           value={selectedPageSize}
           onChange={(e) => setSelectedPageSize(Number(e.target.value))}
-          className='py-1 outline-none'
+          className='py-1 outline-none rounded px-1'
         >
           {pageSizes.map((size, index) => (
             <option key={index + 1} value={size}>
@@ -45,7 +45,13 @@ const TablePagination = ({
       </div>
       <div className='flex'>
         <p>
-          Showing {count === 0 ? count + 1 : count * selectedPageSize + 1} -{' '}
+          Showing{' '}
+          {totalCount === 0
+            ? count
+            : count === 0
+            ? count + 1
+            : count * selectedPageSize + 1}{' '}
+          -{' '}
           {count * selectedPageSize + selectedPageSize > totalCount
             ? totalCount
             : count * selectedPageSize + selectedPageSize}{' '}
