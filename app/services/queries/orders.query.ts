@@ -41,3 +41,23 @@ export const useGetOrdersSummary = <T>(
       return data.data as DataType<T>;
     },
   });
+
+export const useGetRevenueValues = <T>(
+  ordersQueryParams?: OrdersQueryParamsType
+) =>
+  useQuery({
+    queryKey: ['getRevenue', ordersQueryParams],
+    queryFn: async () => {
+      const { data } = await axios.get(URLS.getRevenueValues, {
+        params: {
+          term: ordersQueryParams?.term || null,
+          direction: ordersQueryParams?.direction || 'desc',
+          cursor: ordersQueryParams?.cursor,
+          size: ordersQueryParams?.size || 10,
+          orderBy: ordersQueryParams?.orderBy,
+          period: ordersQueryParams?.period,
+        },
+      });
+      return data.data as DataType<T>;
+    },
+  });

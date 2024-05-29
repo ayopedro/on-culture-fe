@@ -5,28 +5,62 @@ import { DashboardStat } from '@@/components/dashboard-stat';
 import OrdersChart from '@@/components/orders-chart';
 import OrdersTable from '@@/components/orders-table';
 import RevenueChart from '@@/components/revenue-chart';
-import { useGetOrdersSummary } from '@@/services/queries/orders.query';
+import Spinner from '@@/components/spinner';
+import {
+  useGetOrders,
+  useGetOrdersSummary,
+  useGetRevenueValues,
+} from '@@/services/queries/orders.query';
 import { useAppSelector } from '@@/services/redux/hooks';
 import { user } from '@@/services/redux/selectors/auth.selector';
 import { SortDirection } from '@@/types';
-import { OrderSummaryResponse } from '@@/types/order.types';
+import {
+  OrderSummaryResponse,
+  OrdersQueryResponse,
+  RevenueResponse,
+} from '@@/types/order.types';
 import { DateFilter } from '@@/utils/constant';
 import { DashboardStats } from '@@/utils/dummy-data';
 import moment from 'moment';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useDebounce } from 'use-debounce';
 
 const DashboardPage = () => {
   const searchParams = useSearchParams();
   const year = searchParams.get('year');
 
   const router = useRouter();
-
+  const [count, setCount] = useState<number>(0);
+  const [selectedPageSize, setSelectedPageSize] = useState<number>(10);
   const [filters, setFilters] = useState<any>({});
+  const [debouncedTerm] = useDebounce(filters.term, 500);
 
+  // order summary
   const { data = {} } = useGetOrdersSummary<OrderSummaryResponse>({
     ...{ ...filters, direction: SortDirection.DESC },
   });
+
+  // orders
+  const { data: orderData, isSuccess: orderSuccess } =
+    useGetOrders<OrdersQueryResponse>({
+      ...(debouncedTerm && { term: debouncedTerm }),
+      ...{
+        ...filters,
+        size: selectedPageSize,
+        direction: SortDirection.DESC,
+      },
+    });
+
+  // revenue
+  const { data: revenueData, isSuccess } = useGetRevenueValues<RevenueResponse>(
+    {
+      ...{
+        ...filters,
+        direction: SortDirection.ASC,
+      },
+    }
+  );
 
   const user_details = useAppSelector(user);
 
@@ -79,12 +113,26 @@ const DashboardPage = () => {
       </section>
 
       <section className='grid grid-cols-3 gap-5 my-12'>
-        <RevenueChart />
+        <RevenueChart data={revenueData} isSuccess={isSuccess} />
         <OrdersChart />
       </section>
 
       <section>
-        <OrdersTable />
+        {orderSuccess ? (
+          <OrdersTable
+            count={count}
+            selectedPageSize={selectedPageSize}
+            setCount={setCount}
+            setSelectedPageSize={setSelectedPageSize}
+            setFilters={setFilters}
+            data={orderData}
+            isLoading={!orderSuccess}
+          />
+        ) : (
+          <div className='flex justify-center items-center h-full'>
+            <Spinner />
+          </div>
+        )}
       </section>
     </div>
   );

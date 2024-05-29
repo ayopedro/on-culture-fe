@@ -9,4 +9,5 @@ export const URLS = {
   getOrdersSummary: `${baseUrl}/orders/summary`,
   createBulkOrder: `${baseUrl}/orders/bulk-upload`,
   validateBulkOrders: `${baseUrl}/orders/validate-bulk-upload`,
+  getRevenueValues: `${baseUrl}/orders/revenue`,
 };

@@ -4,40 +4,33 @@ import { OrdersQueryResponse, TableProps } from '@@/types/order.types';
 import { AppUtilities } from '@@/utils';
 import { customStyles } from '@@/utils/custom-table-styles';
 import moment from 'moment';
-import { useEffect, useMemo, useState } from 'react';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import TablePagination from './table-pagination';
 import Card from './card';
 import { FaEllipsis } from 'react-icons/fa6';
-import { useDebounce } from 'use-debounce';
-import { useGetOrders } from '@@/services/queries/orders.query';
-import { SortDirection } from '@@/types';
 import Spinner from './spinner';
+import { useMemo } from 'react';
+import { DataType } from '@@/types';
 
 type Props = {
-  year?: string;
+  data: DataType<OrdersQueryResponse>;
+  isLoading: boolean;
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+  selectedPageSize: number;
+  setSelectedPageSize: React.Dispatch<React.SetStateAction<number>>;
+  setFilters: React.Dispatch<any>;
 };
 
-const OrdersTable = ({ year }: Props) => {
-  const [count, setCount] = useState<number>(0);
-  const [selectedPageSize, setSelectedPageSize] = useState<number>(10);
-  const [filters, setFilters] = useState<any>({});
-  const [debouncedTerm] = useDebounce(filters.term, 500);
-
-  const { data, isLoading, isSuccess } = useGetOrders<OrdersQueryResponse>({
-    ...(debouncedTerm && { term: debouncedTerm }),
-    ...{
-      ...filters,
-      size: selectedPageSize,
-      direction: SortDirection.DESC,
-    },
-  });
-
-  const memoizedData = useMemo(() => {
-    if (isSuccess) return AppUtilities.reformData(data);
-    return [];
-  }, [data, isSuccess]);
-
+const OrdersTable = ({
+  data,
+  isLoading,
+  count,
+  setCount,
+  selectedPageSize,
+  setSelectedPageSize,
+  setFilters,
+}: Props) => {
   const columns: TableColumn<TableProps>[] = [
     {
       cell: (row) => <input type='checkbox' id={row.id} />,
@@ -75,19 +68,16 @@ const OrdersTable = ({ year }: Props) => {
     },
   ];
 
-  useEffect(() => {
-    console.log('running...');
-    setFilters((prevState: OrdersQueryResponse) => ({
-      ...prevState,
-      period: year,
-    }));
-  }, [year]);
+  const memoizedOrderData = useMemo(() => {
+    if (!isLoading) return AppUtilities.reformData(data);
+    return [];
+  }, [data, isLoading]);
 
   return (
     <Card>
       <h4 className='text-grey mb-5'>Orders</h4>
       <DataTable
-        data={memoizedData}
+        data={memoizedOrderData}
         columns={columns}
         progressPending={isLoading}
         progressComponent={<Spinner />}

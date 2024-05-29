@@ -10,7 +10,7 @@ export type OrdersQueryParamsType = {
   category?: ProductCategory;
 };
 
-export interface OrdersQueryResponse {
+export type OrdersQueryResponse = {
   id: string;
   customer: {
     id: string;
@@ -24,6 +24,13 @@ export interface OrdersQueryResponse {
     price: number;
   };
   date: string;
+  [key: string]: any;
+};
+
+export interface RevenueResponse {
+  id?: string;
+  date: string;
+  price: number;
 }
 
 export interface OrderSummaryResponse {
