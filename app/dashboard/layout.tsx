@@ -22,7 +22,9 @@ const DashboardLayout = ({
     innerWindowWidth = window.innerWidth;
 
     if (innerWindowWidth < 768 && showSidebar) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflowY = 'hidden';
+    } else {
+      document.body.style.overflowY = 'auto';
     }
   }
 
