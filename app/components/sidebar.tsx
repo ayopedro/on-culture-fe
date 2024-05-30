@@ -9,12 +9,14 @@ import { useAppDispatch } from '@@/services/redux/hooks';
 import { logoutUser } from '@@/services/redux/slices/auth.slice';
 import { persistor } from '@@/services/redux/store';
 import toast from 'react-hot-toast';
+import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
   showSideBar: boolean;
+  onShow: Dispatch<SetStateAction<boolean>>;
 };
 
-const Sidebar = ({ showSideBar }: Props) => {
+const Sidebar = ({ showSideBar, onShow }: Props) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -22,6 +24,7 @@ const Sidebar = ({ showSideBar }: Props) => {
     dispatch(logoutUser());
     sessionStorage.clear();
     persistor.purge();
+    onShow(false);
     router.push('/');
     toast.success('Logout Successful!');
   };
@@ -41,7 +44,7 @@ const Sidebar = ({ showSideBar }: Props) => {
       >
         {SideBarLinks.map((item) => {
           return (
-            <li key={item.key}>
+            <li key={item.key} onClick={() => onShow(false)}>
               <Link href={item.url} className='flex gap-4 items-center'>
                 {item.icon} {showSideBar && item.title}
               </Link>
@@ -54,7 +57,10 @@ const Sidebar = ({ showSideBar }: Props) => {
           showSideBar ? 'items-start' : 'items-center'
         } mb-20`}
       >
-        <li className='flex gap-4 items-center cursor-pointer'>
+        <li
+          className='flex gap-4 items-center cursor-pointer'
+          onClick={() => onShow(false)}
+        >
           <Gear /> {showSideBar && 'Settings'}
         </li>
         <li

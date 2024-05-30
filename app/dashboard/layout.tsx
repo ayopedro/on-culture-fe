@@ -15,13 +15,17 @@ const DashboardLayout = ({
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
+  const innerWindowWidth = window.innerWidth;
+
+  if (innerWindowWidth < 768 && showSidebar) {
+    document.body.style.overflow = 'hidden';
+  }
 
   useEffect(() => {
-    const innerWindowWidth = window.innerWidth;
     if (innerWindowWidth > 768) {
       setShowSidebar(true);
     }
-  }, []);
+  }, [innerWindowWidth]);
 
   return (
     <ProtectedPage>
@@ -31,7 +35,7 @@ const DashboardLayout = ({
           className='md:grid md:grid-cols-12'
           style={{ height: 'calc(100vh - 88px)' }}
         >
-          <Sidebar showSideBar={showSidebar} />
+          <Sidebar showSideBar={showSidebar} onShow={setShowSidebar} />
           <main
             className={`bg-bg-light-blue w-full p-5 ${
               showSidebar ? 'col-span-10' : 'col-span-11'
