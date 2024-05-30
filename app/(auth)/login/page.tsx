@@ -62,7 +62,7 @@ const Login = () => {
         <div className='flex gap-3 w-full'>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className='rounded-md w-full flex flex-col gap-5 px-5 py-10 bg-white'
+            className='rounded-md w-full flex flex-col gap-5 px-3 md:px-5 py-10 bg-white'
           >
             <div className='input-group'>
               <label htmlFor='email'>Email Address</label>

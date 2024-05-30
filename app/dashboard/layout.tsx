@@ -3,18 +3,25 @@
 import ProtectedPage from '@@/components/guard/protected';
 import Navbar from '@@/components/navbar';
 import Sidebar from '@@/components/sidebar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const DashboardLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
+
+  useEffect(() => {
+    const innerWindowWidth = window.innerWidth;
+    if (innerWindowWidth > 768) {
+      setShowSidebar(true);
+    }
+  }, []);
 
   return (
     <ProtectedPage>

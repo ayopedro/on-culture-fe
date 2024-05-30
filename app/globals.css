@@ -37,11 +37,19 @@
 }
 
 .btn {
-  @apply py-3 md:py-2 px-4 rounded-md w-full transition hover:ease-in-out;
+  @apply py-3 md:py-1 px-4 rounded-md transition hover:ease-in-out cursor-pointer;
+}
+
+.btn:disabled {
+  @apply disabled:bg-gray-200 disabled:border-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed;
 }
 
 .btn-outline {
-  @apply bg-white text-grey border border-grey hover:bg-grey hover:text-white;
+  @apply bg-white text-gray-400 border border-grey hover:bg-gray-500 hover:text-white;
+}
+
+.btn-cancel {
+  @apply bg-red text-white border border-red hover:bg-rose-700;
 }
 
 .btn-primary {
@@ -65,10 +73,26 @@ form a {
   @apply text-blue hover:underline;
 }
 
+.sidebar {
+  @apply p-5 flex-col items-center justify-between fixed z-50 md:relative top-[88] md:top-0 left-0 right-0 bottom-0 md:bg-white bg-bg-light-blue;
+}
+
 .dashboard-date-filter-select {
   @apply border border-slate-400 bg-transparent rounded-md p-2 outline-none text-grey font-medium;
 }
 
 .dashboard-cards {
   @apply flex flex-col gap-5 md:gap-0 md:grid md:grid-cols-3 divide-x-0 md:divide-x-2 justify-center md:justify-start divide-y-2 md:divide-y-0;
+}
+
+.modal {
+  @apply fixed inset-0 z-[100] bg-black bg-opacity-50 flex items-center justify-center;
+}
+
+.modal-content {
+  @apply bg-white p-3 rounded-md;
+}
+
+.drag-drop {
+  @apply border border-gray-300 border-dashed p-10 rounded;
 }
