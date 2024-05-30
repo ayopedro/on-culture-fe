@@ -21,7 +21,7 @@ const DashboardLayout = ({
       <div className='h-screen'>
         <Navbar toggle={toggleSidebar} />
         <div
-          className='grid grid-cols-12'
+          className='md:grid md:grid-cols-12'
           style={{ height: 'calc(100vh - 88px)' }}
         >
           <Sidebar showSideBar={showSidebar} />

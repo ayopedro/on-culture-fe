@@ -29,8 +29,8 @@ const Sidebar = ({ showSideBar }: Props) => {
   return (
     <aside
       className={`${
-        showSideBar ? 'col-span-2' : 'col-span-1'
-      } p-5 flex flex-col justify-between`}
+        showSideBar ? 'flex md:col-span-2' : 'hidden md:flex md:col-span-1'
+      } p-5 flex flex-col justify-between fixed z-50 md:relative top-[88] md:top-0 left-0 right-0 bottom-0 bg-white`}
     >
       <ul
         className={`flex flex-col ${

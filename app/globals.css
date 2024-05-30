@@ -10,8 +10,34 @@
   }
 }
 
+* {
+  scrollbar-width: thin;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ccc;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .btn {
-  @apply py-2 px-4 rounded-md w-full transition hover:ease-in-out;
+  @apply py-3 md:py-2 px-4 rounded-md w-full transition hover:ease-in-out;
 }
 
 .btn-outline {
@@ -37,4 +63,12 @@
 
 form a {
   @apply text-blue hover:underline;
+}
+
+.dashboard-date-filter-select {
+  @apply border border-slate-400 bg-transparent rounded-md p-2 outline-none text-grey font-medium;
+}
+
+.dashboard-cards {
+  @apply flex flex-col gap-5 md:gap-0 md:grid md:grid-cols-3 divide-x-0 md:divide-x-2 justify-center md:justify-start divide-y-2 md:divide-y-0;
 }

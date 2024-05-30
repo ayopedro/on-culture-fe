@@ -10,4 +10,5 @@ export const URLS = {
   createBulkOrder: `${baseUrl}/orders/bulk-upload`,
   validateBulkOrders: `${baseUrl}/orders/validate-bulk-upload`,
   getRevenueValues: `${baseUrl}/orders/revenue`,
+  getOrderCategories: `${baseUrl}/orders/product-categories`,
 };

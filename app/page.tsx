@@ -19,12 +19,12 @@ export default function Home() {
           <Image src='/Logo.png' alt='logo' width={30} height={30} />
           <h1 className='text-3xl font-bold'>XYZ Store</h1>
         </div>
-        <div className='flex gap-3 w-full'>
+        <div className='flex flex-col md:flex-row gap-5 md:gap-3 w-full'>
           <button
             className='btn btn-outline'
             onClick={() => router.push('/create-order')}
           >
-            Create an order
+            Create order
           </button>
           {isAuth ? (
             <button

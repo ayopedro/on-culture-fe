@@ -5,8 +5,8 @@ import { DashboardStat } from '@@/components/dashboard-stat';
 import OrdersChart from '@@/components/orders-chart';
 import OrdersTable from '@@/components/orders-table';
 import RevenueChart from '@@/components/revenue-chart';
-import Spinner from '@@/components/spinner';
 import {
+  useGetOrderCategoryValues,
   useGetOrders,
   useGetOrdersSummary,
   useGetRevenueValues,
@@ -17,6 +17,7 @@ import { SortDirection } from '@@/types';
 import {
   OrderSummaryResponse,
   OrdersQueryResponse,
+  ProductCategoryResponse,
   RevenueResponse,
 } from '@@/types/order.types';
 import { DateFilter } from '@@/utils/constant';
@@ -53,14 +54,22 @@ const DashboardPage = () => {
     });
 
   // revenue
-  const { data: revenueData, isSuccess } = useGetRevenueValues<RevenueResponse>(
-    {
+  const { data: revenueData = [], isSuccess } =
+    useGetRevenueValues<RevenueResponse>({
       ...{
         ...filters,
         direction: SortDirection.ASC,
       },
-    }
-  );
+    });
+
+  // order-categories-chart
+  const { data: orderCategoriesData = [], isSuccess: orderCategoriesSuccess } =
+    useGetOrderCategoryValues<ProductCategoryResponse>({
+      ...{
+        ...filters,
+        direction: SortDirection.ASC,
+      },
+    });
 
   const user_details = useAppSelector(user);
 
@@ -74,19 +83,19 @@ const DashboardPage = () => {
   }, [year]);
 
   return (
-    <div className='p-5'>
-      <div className='flex justify-between items-center'>
+    <div className='p-3 md:p-5'>
+      <div className='flex flex-col-reverse md:flex-row md:justify-between items-start md:items-center gap-10'>
         <div>
-          <h2 className='text-3xl font-bold'>
+          <h2 className='text-xl md:text-3xl font-medium md:font-bold'>
             Welcome, {user_details?.firstName}
           </h2>
-          <p className='text-grey mt-1'>
+          <p className='text-grey mt-1 text-sm md:text-base'>
             {moment().format('dddd, DD MMM YYYY')}
           </p>
         </div>
         <select
           name='dateFilter'
-          className='border border-slate-400 bg-transparent rounded-md p-2 outline-none text-grey font-medium'
+          className='dashboard-date-filter-select'
           onChange={handleDateFilter}
           defaultValue={year || ''}
         >
@@ -99,7 +108,7 @@ const DashboardPage = () => {
       </div>
       <section className='my-12'>
         <Card>
-          <div className='grid grid-cols-3 divide-x-2'>
+          <div className='dashboard-cards'>
             {DashboardStats.map((stat) => (
               <DashboardStat
                 key={stat.id}
@@ -112,9 +121,15 @@ const DashboardPage = () => {
         </Card>
       </section>
 
-      <section className='grid grid-cols-3 gap-5 my-12'>
-        <RevenueChart data={revenueData} isSuccess={isSuccess} />
-        <OrdersChart />
+      <section className='flex flex-col md:grid md:grid-cols-3 gap-5 my-12'>
+        <RevenueChart
+          data={revenueData as unknown as RevenueResponse[]}
+          isSuccess={isSuccess}
+        />
+        <OrdersChart
+          data={orderCategoriesData as unknown as ProductCategoryResponse[]}
+          isSuccess={orderCategoriesSuccess}
+        />
       </section>
 
       <section>

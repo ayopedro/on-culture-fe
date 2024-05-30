@@ -10,7 +10,7 @@ type Props = {
 
 export const DashboardStat = ({ title, data, uKey }: Props) => {
   return Object.keys(data).length ? (
-    <div className='md:py-8 md:px-12 flex flex-col gap-5'>
+    <div className='py-5 md:py-8 md:px-12 flex flex-col gap-5'>
       <h4 className='text-grey'>{title}</h4>
       <div className='flex items-center gap-5'>
         <h3 className='md:text-2xl font-bold'>

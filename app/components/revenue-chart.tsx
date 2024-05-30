@@ -16,7 +16,7 @@ import moment from 'moment';
 import { MdDataObject } from 'react-icons/md';
 
 type Props = {
-  data: DataType<RevenueResponse> | undefined;
+  data: RevenueResponse[];
   isSuccess: boolean;
 };
 
@@ -24,21 +24,19 @@ const RevenueChart = ({ data, isSuccess }: Props) => {
   let reformedRevenueData: RevenueResponse[] = [];
 
   if (isSuccess) {
-    reformedRevenueData = (data || []).map(
-      (item: { date: string; price: number }) => {
-        return {
-          date: moment(item.date).format('MMM YYYY'),
-          price: item.price,
-        };
-      }
-    );
+    reformedRevenueData = data.map((item: { date: string; price: number }) => {
+      return {
+        date: moment(item.date).format('MMM YYYY'),
+        price: item.price,
+      };
+    });
   }
 
   return (
     <div className='col-span-2 h-full'>
       <Card>
         <h4 className='text-grey mb-10'>Revenue over time</h4>
-        <div className='h-[20rem]'>
+        <div className='h-[20rem] overflow-x-auto'>
           {isSuccess ? (
             <ResponsiveContainer
               minWidth={(data || []).length * 65}

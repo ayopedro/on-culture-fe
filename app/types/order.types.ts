@@ -33,6 +33,12 @@ export interface RevenueResponse {
   price: number;
 }
 
+export interface ProductCategoryResponse {
+  id?: string;
+  name: ProductCategory;
+  count: number;
+}
+
 export interface OrderSummaryResponse {
   totalRevenue: Record<string, any> | number;
   totalOrders: Record<string, any> | number;

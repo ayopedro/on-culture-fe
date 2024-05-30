@@ -35,17 +35,10 @@ export type PageCursors = {
 };
 
 export type DataType<T> = {
-  map(
-    arg0: (item: { date: string; price: number }) => {
-      date: string;
-      price: number;
-    }
-  ): import('./order.types').RevenueResponse[];
   length: number;
   pageCursors: PageCursors;
   pageEdges: PageEdge<T>[];
   totalCount: number;
-  uniquePatients?: any;
 };
 
 export type QueryParamsType = {

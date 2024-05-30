@@ -28,7 +28,7 @@ const TablePagination = ({
   setSelectedPageSize,
 }: PropType) => {
   return (
-    <div className='flex items-center justify-end gap-2 text-xs mt-3 text-gray-500'>
+    <div className='flex flex-col md:flex-row items-center justify-end gap-2 text-xs mt-3 text-gray-500 w-full'>
       <div className='flex items-center gap-1'>
         <p>Rows per page:</p>
         <select
@@ -81,7 +81,7 @@ const TablePagination = ({
         >
           <IoChevronForward
             style={{ pointerEvents: !nextLoad ? 'none' : 'auto' }}
-            color={!nextLoad ? 'white' : '#6B7280'}
+            color={!nextLoad ? 'white' : '#64748B'}
           />
         </button>
       </div>
