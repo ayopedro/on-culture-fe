@@ -74,7 +74,7 @@ form a {
 }
 
 .sidebar {
-  @apply p-5 flex-col items-center justify-center md:justify-between gap-12 fixed z-40 md:relative top-0 md:top-0 left-0 right-0 bottom-0 md:bg-white bg-bg-light-blue;
+  @apply p-5 pt-10 flex-col items-center justify-center md:justify-between gap-12 fixed z-40 md:relative top-0 md:top-0 left-0 right-0 bottom-0 md:bg-white bg-bg-light-blue;
 }
 
 .dashboard-date-filter-select {
