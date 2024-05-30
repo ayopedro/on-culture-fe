@@ -11,17 +11,23 @@ const DashboardLayout = ({
   children: React.ReactNode;
 }>) => {
   const [showSidebar, setShowSidebar] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
-  const innerWindowWidth = window.innerWidth;
+  let innerWindowWidth: any;
 
-  if (innerWindowWidth < 768 && showSidebar) {
-    document.body.style.overflow = 'hidden';
+  if (mounted) {
+    innerWindowWidth = window.innerWidth;
+
+    if (innerWindowWidth < 768 && showSidebar) {
+      document.body.style.overflow = 'hidden';
+    }
   }
 
   useEffect(() => {
+    setMounted(true);
     if (innerWindowWidth > 768) {
       setShowSidebar(true);
     }
