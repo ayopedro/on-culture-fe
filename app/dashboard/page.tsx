@@ -2,9 +2,11 @@
 
 import Card from '@@/components/card';
 import { DashboardStat } from '@@/components/dashboard-stat';
+import Modal from '@@/components/modal';
 import OrdersChart from '@@/components/orders-chart';
 import OrdersTable from '@@/components/orders-table';
 import RevenueChart from '@@/components/revenue-chart';
+import UploadOrders from '@@/components/upload-orders';
 import {
   useGetOrderCategoryValues,
   useGetOrders,
@@ -30,8 +32,10 @@ import { useDebounce } from 'use-debounce';
 const DashboardPage = () => {
   const searchParams = useSearchParams();
   const year = searchParams.get('year');
+  const uploadOrders = searchParams.get('uploadOrders');
 
   const router = useRouter();
+
   const [count, setCount] = useState<number>(0);
   const [selectedPageSize, setSelectedPageSize] = useState<number>(10);
   const [filters, setFilters] = useState<any>({});
@@ -78,13 +82,22 @@ const DashboardPage = () => {
     router.push(`/dashboard/${query}`);
   };
 
+  const handleBulkUploadModal = () => {
+    router.push('/dashboard');
+  };
+
   useEffect(() => {
     setFilters((prev: any) => ({ ...prev, period: year }));
   }, [year]);
 
   return (
-    <div className='p-3 md:p-5'>
+    <div className='p-0 md:p-5'>
       <div className='flex flex-col-reverse md:flex-row md:justify-between items-start md:items-center gap-10'>
+        {uploadOrders ? (
+          <Modal onClose={handleBulkUploadModal}>
+            <UploadOrders />
+          </Modal>
+        ) : null}
         <div>
           <h2 className='text-xl md:text-3xl font-medium md:font-bold'>
             Welcome, {user_details?.firstName}
@@ -93,18 +106,27 @@ const DashboardPage = () => {
             {moment().format('dddd, DD MMM YYYY')}
           </p>
         </div>
-        <select
-          name='dateFilter'
-          className='dashboard-date-filter-select'
-          onChange={handleDateFilter}
-          defaultValue={year || ''}
-        >
-          {DateFilter.map((filter) => (
-            <option key={filter.value} value={filter.value}>
-              {filter.label}
-            </option>
-          ))}
-        </select>
+        <div className='flex gap-2 items-center'>
+          <button
+            className='btn btn-primary text-sm'
+            onClick={() => router.push('/dashboard?uploadOrders=true')}
+            style={{ paddingBlock: '0.6rem' }}
+          >
+            Bulk Upload Orders
+          </button>
+          <select
+            name='dateFilter'
+            className='dashboard-date-filter-select'
+            onChange={handleDateFilter}
+            defaultValue={year || ''}
+          >
+            {DateFilter.map((filter) => (
+              <option key={filter.value} value={filter.value}>
+                {filter.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <section className='my-12'>
         <Card>

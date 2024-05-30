@@ -62,6 +62,7 @@ export interface TableProps {
 }
 
 export type ImportType = {
+  order_number?: string;
   customer_name: string;
   email: string;
   product_name: string;

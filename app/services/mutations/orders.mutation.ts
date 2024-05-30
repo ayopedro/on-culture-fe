@@ -24,7 +24,7 @@ export const useCreateOrderMutation = () => {
 
 export const useValidateBulkUploadOrdersMutation = () => {
   return useMutation({
-    mutationKey: ['bulkUploadOrders'],
+    mutationKey: ['validateBulkUploadOrders'],
     mutationFn: async (data: any) => {
       const res = await axios.post(URLS.validateBulkOrders, data);
       return res;
