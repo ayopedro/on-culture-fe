@@ -34,7 +34,7 @@ const TablePagination = ({
         <select
           value={selectedPageSize}
           onChange={(e) => setSelectedPageSize(Number(e.target.value))}
-          className='py-1 outline-none rounded px-1'
+          className='py-1 outline-none rounded px-3'
         >
           {pageSizes.map((size, index) => (
             <option key={index + 1} value={size}>

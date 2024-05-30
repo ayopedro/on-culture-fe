@@ -27,7 +27,7 @@ const OrdersChart = ({ data, isSuccess }: Props) => {
         <div className='h-[20rem] overflow-x-auto'>
           {isSuccess ? (
             <ResponsiveContainer
-              minWidth={(data || []).length * 65}
+              minWidth={(data || []).length * 10}
               minHeight={164}
               maxHeight={300}
               width='100%'
@@ -36,7 +36,7 @@ const OrdersChart = ({ data, isSuccess }: Props) => {
               <PieChart width={730} height={250}>
                 <text
                   x={'50%'}
-                  y={'38%'}
+                  y={'33%'}
                   dy={8}
                   textAnchor='middle'
                   fill={'#64748B'}
@@ -45,7 +45,7 @@ const OrdersChart = ({ data, isSuccess }: Props) => {
                 </text>
                 <text
                   x={'50%'}
-                  y={'50%'}
+                  y={'45%'}
                   dy={8}
                   textAnchor='middle'
                   fill={'#64748B'}
@@ -77,7 +77,7 @@ const OrdersChart = ({ data, isSuccess }: Props) => {
                 <Legend
                   layout='horizontal'
                   align='center'
-                  className='text-sm'
+                  margin={{ top: 20 }}
                 />
               </PieChart>
             </ResponsiveContainer>

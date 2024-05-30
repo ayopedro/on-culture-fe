@@ -11,6 +11,7 @@ import * as XLSX from 'xlsx';
 import Spinner from './spinner';
 import Modal from './modal';
 import { useRouter } from 'next/navigation';
+import BulkuploadSuccess from './bulk-upload-success';
 
 type Props = {
   invalidData: ServerData;
@@ -197,21 +198,7 @@ const InvalidServerData = ({
             router.push('/dashboard');
           }}
         >
-          <>
-            <div className='flex flex-col items-center justify-between'>
-              <div className='mt-8 mb-16'>
-                {/* <Circle size={100} bg='brand.green'>
-                <TickIcon />
-              </Circle> */}
-              </div>
-              <div>
-                <p className='text-txt-green font-semibold text-sm'>
-                  {invalidData?.validRecords?.orders.length} Record(s) Uploaded
-                  Successfully
-                </p>
-              </div>
-            </div>
-          </>
+          <BulkuploadSuccess value={invalidData?.validRecords?.orders.length} />
         </Modal>
       ) : null}
     </div>

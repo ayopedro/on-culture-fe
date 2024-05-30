@@ -39,7 +39,7 @@ const RevenueChart = ({ data, isSuccess }: Props) => {
         <div className='h-[20rem] overflow-x-auto'>
           {isSuccess ? (
             <ResponsiveContainer
-              minWidth={(data || []).length * 65}
+              minWidth={(data || []).length * 10}
               minHeight={164}
               maxHeight={275}
               width='100%'

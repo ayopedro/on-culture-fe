@@ -15,6 +15,7 @@ import InvalidServerData from './invalid-server-data';
 import Link from 'next/link';
 import { BiDownload } from 'react-icons/bi';
 import { useRouter } from 'next/navigation';
+import BulkuploadSuccess from './bulk-upload-success';
 
 const UploadOrders = () => {
   const [pathName, setPathName] = useState('');
@@ -302,20 +303,7 @@ const UploadOrders = () => {
             router.push('/dashboard');
           }}
         >
-          <>
-            <div className='flex flex-col items-center justify-between'>
-              <div className='mt-8 mb-16'>
-                {/* <Circle size={100} bg='brand.green'>
-                <TickIcon />
-              </Circle> */}
-              </div>
-              <div>
-                <p className='text-txt-green font-semibold text-sm'>
-                  {excelEntries.length} Record(s) Uploaded Successfully
-                </p>
-              </div>
-            </div>
-          </>
+          <BulkuploadSuccess value={excelEntries.length} />
         </Modal>
       ) : null}
     </div>

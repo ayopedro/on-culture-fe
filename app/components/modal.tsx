@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { IoMdClose } from 'react-icons/io';
 
 type ModalProps = {
   children: React.ReactNode;
@@ -17,7 +18,9 @@ const Modal = ({ children, onClose }: ModalProps) => {
     <div className='modal'>
       <div className='modal-content'>
         <div className='flex items-center justify-end'>
-          <button onClick={onClose}>x</button>
+          <button onClick={onClose}>
+            <IoMdClose />
+          </button>
         </div>
         <div className='p-3 md:p-5 mt-5'>{children}</div>
       </div>
