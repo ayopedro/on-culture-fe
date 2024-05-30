@@ -47,7 +47,7 @@ const ResetPassword = () => {
 
   return (
     <div className='bg-bg-light-blue flex items-center h-screen justify-center'>
-      <div className='flex flex-col gap-10 items-center md:w-1/4'>
+      <div className='flex flex-col gap-10 items-center w-[90vw] md:w-1/4'>
         <div
           className='flex items-center gap-4 cursor-pointer'
           onClick={() => router.push('/')}
