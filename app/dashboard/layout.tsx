@@ -45,7 +45,7 @@ const DashboardLayout = ({
         >
           <Sidebar showSideBar={showSidebar} onShow={setShowSidebar} />
           <main
-            className={`bg-bg-light-blue w-full p-5 ${
+            className={`bg-bg-light-blue w-full p-5 pt-20 ${
               showSidebar ? 'col-span-10' : 'col-span-11'
             } overflow-auto`}
           >

@@ -6,10 +6,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { OrderType } from '@@/types/order.types';
 import { CreateOrderSchema } from '@@/schema/order.schema';
-import { ProductCategories, ProductCategory } from '@@/utils/constant';
+import { ProductCategories } from '@@/utils/constant';
 import { useCreateOrderMutation } from '@@/services/mutations/orders.mutation';
 import toast from 'react-hot-toast';
-import moment from 'moment';
 
 const Register = () => {
   const { mutateAsync: createOrder, isPending } = useCreateOrderMutation();
@@ -55,7 +54,7 @@ const Register = () => {
 
   return (
     <div className='bg-bg-light-blue flex items-center h-screen justify-center'>
-      <div className='flex flex-col gap-10 items-center md:w-1/4'>
+      <div className='flex flex-col gap-10 items-center w-[90vw] md:w-1/4'>
         <div
           className='flex items-center gap-4 cursor-pointer'
           onClick={() => router.push('/')}
