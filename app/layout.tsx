@@ -11,6 +11,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'OnCulture Demo App',
   description: 'Developed by Ayotunde Pedro',
+  icons: [
+    { rel: 'icon', url: '/favicon.ico' },
+    { rel: 'icon', url: '/vercel.svg' },
+  ],
 };
 
 export default function RootLayout({

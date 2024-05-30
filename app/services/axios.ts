@@ -31,7 +31,7 @@ axios.interceptors.response.use(
       error.response?.status === 401 &&
       error.response?.data?.message === 'Unauthorized'
     ) {
-      sessionStorage.removeItem('isLoggedIn');
+      sessionStorage.clear();
       toast.error(
         `${error.response?.data?.message}. Please login to continue` ||
           error.message
@@ -43,9 +43,13 @@ axios.interceptors.response.use(
     }
     if (error instanceof AxiosError && error.response?.status === 400) {
       toast.error(error.response?.data?.message || error.message);
+      sessionStorage.clear();
+      window.location.href = '/';
       return Promise.reject(error.response);
     }
     toast.error(error.response?.data?.message || error.message);
+    sessionStorage.clear();
+    window.location.href = '/';
     return Promise.reject(error.response);
   }
 );
