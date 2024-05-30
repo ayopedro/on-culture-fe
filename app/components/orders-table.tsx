@@ -85,31 +85,33 @@ const OrdersTable = ({
             progressComponent={<Spinner />}
             customStyles={customStyles}
           />
-          <TablePagination
-            totalCount={data?.totalCount!}
-            nextLoad={data?.pageCursors.next?.cursor}
-            previous={data?.pageCursors.previous?.cursor}
-            count={count}
-            setCount={setCount}
-            selectedPageSize={selectedPageSize}
-            setSelectedPageSize={setSelectedPageSize}
-            handleNextLoad={() => {
-              const next = data?.pageCursors.next;
-              if (!next) return;
-              setFilters((prevState: OrdersQueryResponse) => ({
-                ...prevState,
-                cursor: next.cursor,
-              }));
-            }}
-            handlePreviousLoad={() => {
-              const previous = data?.pageCursors.previous;
-              if (!previous) return;
-              setFilters((prevState: OrdersQueryResponse) => ({
-                ...prevState,
-                cursor: previous.cursor,
-              }));
-            }}
-          />
+          {memoizedOrderData.length ? (
+            <TablePagination
+              totalCount={data?.totalCount!}
+              nextLoad={data?.pageCursors.next?.cursor}
+              previous={data?.pageCursors.previous?.cursor}
+              count={count}
+              setCount={setCount}
+              selectedPageSize={selectedPageSize}
+              setSelectedPageSize={setSelectedPageSize}
+              handleNextLoad={() => {
+                const next = data?.pageCursors.next;
+                if (!next) return;
+                setFilters((prevState: OrdersQueryResponse) => ({
+                  ...prevState,
+                  cursor: next.cursor,
+                }));
+              }}
+              handlePreviousLoad={() => {
+                const previous = data?.pageCursors.previous;
+                if (!previous) return;
+                setFilters((prevState: OrdersQueryResponse) => ({
+                  ...prevState,
+                  cursor: previous.cursor,
+                }));
+              }}
+            />
+          ) : null}
         </>
       ) : (
         <div className='flex justify-center items-center h-full'>

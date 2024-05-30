@@ -35,8 +35,8 @@ const Sidebar = ({ showSideBar }: Props) => {
       } sidebar`}
     >
       <ul
-        className={`flex flex-col ${
-          showSideBar ? 'items-start gap-8' : 'items-center gap-12'
+        className={`flex flex-col gap-12 ${
+          showSideBar ? 'items-start' : 'items-center'
         }`}
       >
         {SideBarLinks.map((item) => {
@@ -50,9 +50,9 @@ const Sidebar = ({ showSideBar }: Props) => {
         })}
       </ul>
       <ul
-        className={`flex flex-col ${
-          showSideBar ? 'items-start gap-8' : 'items-center gap-12'
-        } mb-10`}
+        className={`flex flex-col gap-12 ${
+          showSideBar ? 'items-start' : 'items-center'
+        } mb-20`}
       >
         <li className='flex gap-4 items-center cursor-pointer'>
           <Gear /> {showSideBar && 'Settings'}
