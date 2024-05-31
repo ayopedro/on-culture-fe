@@ -30,10 +30,7 @@ const DashboardLayout = ({
 
   useEffect(() => {
     setMounted(true);
-    if (innerWindowWidth > 768) {
-      setShowSidebar(true);
-    }
-  }, [innerWindowWidth]);
+  }, []);
 
   return (
     <ProtectedPage>

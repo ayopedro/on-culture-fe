@@ -10,7 +10,7 @@ import { ProductCategories } from '@@/utils/constant';
 import { useCreateOrderMutation } from '@@/services/mutations/orders.mutation';
 import toast from 'react-hot-toast';
 
-const Register = () => {
+const CreateOrder = () => {
   const { mutateAsync: createOrder, isPending } = useCreateOrderMutation();
   const router = useRouter();
   const {
@@ -47,14 +47,14 @@ const Register = () => {
         toast.success(result.message || 'Order created successfully!');
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || 'An error occurred');
+      toast.error(error || 'An error occurred. Cannot create order');
       throw new Error(error);
     }
   };
 
   return (
     <div className='bg-bg-light-blue flex items-center h-screen justify-center'>
-      <div className='flex flex-col gap-10 items-center w-[90vw] md:w-1/4'>
+      <div className='flex flex-col gap-10 items-center w-[90vw] md:w-[50vw] xl:w-1/4'>
         <div
           className='flex items-center gap-4 cursor-pointer'
           onClick={() => router.push('/')}
@@ -162,4 +162,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default CreateOrder;
