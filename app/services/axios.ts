@@ -42,13 +42,17 @@ axios.interceptors.response.use(
       return;
     }
     if (error instanceof AxiosError && error.response?.status === 400) {
-      toast.error(error.response?.data?.message || error.message);
-
-      return Promise.reject(error.response);
+      if (Object(error.response.data).hasOwnProperty('errors')) {
+        const errorMessages = error.response.data.errors;
+        const errorValues = Object.values(errorMessages);
+        errorValues.forEach((msg) => {
+          const errMsg = Array.isArray(msg) ? msg.join(',') : msg;
+          toast.error(errMsg as unknown as string);
+        });
+      }
+      return Promise.reject(error.response.data?.message);
     }
-    toast.error(error.response?.data?.message || error.message);
-
-    return Promise.reject(error.response);
+    return Promise.reject(error.response?.data?.message);
   }
 );
 

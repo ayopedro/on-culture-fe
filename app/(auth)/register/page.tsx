@@ -43,17 +43,16 @@ const Register = () => {
         dispatch(registerSuccess(user));
         router.push('/login');
         toast.success(result.data.message || 'Registration Successful!');
-        sessionStorage.setItem('isLoggedIn', JSON.stringify(result.data.data));
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || 'An error occurred');
+      toast.error(error || 'An error occurred');
       throw new Error(error);
     }
   };
 
   return (
     <div className='bg-bg-light-blue flex items-center h-screen justify-center'>
-      <div className='flex flex-col gap-10 items-center w-[90vw] md:w-1/4'>
+      <div className='flex flex-col gap-10 items-center w-[90vw] md:w-[50vw] xl:w-1/4'>
         <div
           className='flex items-center gap-4 cursor-pointer'
           onClick={() => router.push('/')}

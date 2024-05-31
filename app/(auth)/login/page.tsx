@@ -14,8 +14,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 const Login = () => {
-  const { mutateAsync: login, isPending } = useLoginMutation();
+  const { mutateAsync: loginUser, isPending } = useLoginMutation();
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const {
     register,
@@ -31,7 +32,8 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<LoginType> = async (data) => {
     try {
-      const result = await login(data);
+      const result = await loginUser(data);
+
       if (!result) {
         return;
       }
@@ -43,15 +45,14 @@ const Login = () => {
         sessionStorage.setItem('isLoggedIn', JSON.stringify(accessToken));
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || 'An error occurred');
+      toast.error(error || 'An error occurred');
       throw new Error(error);
     }
   };
-  const router = useRouter();
 
   return (
     <div className='bg-bg-light-blue flex items-center h-screen justify-center'>
-      <div className='flex flex-col gap-10 items-center md:w-1/4 w-[90vw]'>
+      <div className='flex flex-col gap-10 items-center w-[90vw] md:w-[50vw] xl:w-1/4'>
         <div
           className='flex items-center gap-4 cursor-pointer'
           onClick={() => router.push('/')}

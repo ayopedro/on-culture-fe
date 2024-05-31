@@ -12,7 +12,9 @@ export const useLoginMutation = () =>
   useMutation({
     mutationKey: ['login'],
     mutationFn: async (data: LoginType) => {
+      console.log('🚀 ~ mutationFn: ~ data:', data);
       const res = await axios.post(URLS.login, data);
+      console.log('🚀 ~ mutationFn: ~ res:', res);
       return res.data;
     },
   });
